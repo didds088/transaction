@@ -42,8 +42,22 @@ load(user,pass) {
 }
 
 //another
-show(n,a) {
-    Swal.fire (n + a);
+load2(user) {
+  let data= {
+    mode: 'view2',
+    uname: user
+  };
+  fetch("https://teakings.000webhostapp.com/new/db.php", {
+    method: 'post',
+    mode: "cors",
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(response => {
+    // response is anything returned API/backend code
+   console.log(response.name);
+   document.querySelector("#head").innerHTML=response.name
+  });
 }
 
 }

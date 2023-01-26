@@ -1,5 +1,8 @@
 <?php
 header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: PUT, GET, POST");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+
 class Database {
    
  public function connect() {
@@ -10,7 +13,8 @@ class Database {
  public function view() {
     $data=array();
     $conn=$this->connect();
-    $sql = "SELECT * FROM profile";
+    $uname = $_POST['uname'];
+    $sql = "SELECT * FROM profile WHERE username='$uname' ";
     $q = mysqli_query($conn, $sql);
     $rowcount=mysqli_num_rows($q);
     if ($rowcount>0)
@@ -26,6 +30,18 @@ class Database {
     echo json_encode($data);
  }
 
+// second view
+public function view2(e) {
+  $conn=$this->connect();
+  $uname= e;
+  $sql = "SELECT * FROM profile WHERE username='$uname' ";
+  $ret_data=mysqli_query($conn,$sql);
+  $row = mysqli_fetch_assoc($ret_data);
+  $result_response = json_encode($row);
+  echo($result_response);
+}
+
 
 }
+
 ?>
