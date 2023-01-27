@@ -1,63 +1,51 @@
 import React from 'react';
-import $ from "jquery";
 import Swal from 'sweetalert2';
 
 class Database extends React.Component {
 
 //login
-load(user,pass) {
-    $.ajax({
-      type: "POST",
-      url: "https://teakings.000webhostapp.com/new/index.php",
-        data: {
-        mode: 'view',
-        uname: user
-      },
-      dataType: 'json',
-      crossDomain: true,
-      beforeSend: function() {
-      document.querySelector("#btn").innerHTML = "Loading....";
-      },
-      success: function(response) {
-      $.each(response, function(i, field) {
-      let n = field.name;
-      let username = field.username;
-      let password = field.password;
-      if(response!=="0")
-      {
-        if ((user === username) && (pass === password)) {
-          document.querySelector("#head").innerHTML= n;
-        //Swal.fire ( "Welcome" ,  n ,  "success" );
-          document.querySelector("#btn").innerHTML = "Login";
-        }
-        else {
-          Swal.fire ( 'Oops' , 'Invalid Username  or Password' ,  'error' );
-          document.querySelector("#btn").innerHTML = "Login";
-        }      
-      }
-    
-       }); //each. Response
-      }// success function
-     }); //ajax ends
-}
-
-//another
-load2(user) {
+async load(user) {
   let data= {
-    mode: 'view2',
+    type: "view",
     uname: user
   };
-  fetch("https://teakings.000webhostapp.com/new/db.php", {
+  const response = await fetch("https://teakings.000webhostapp.com/new/index.php", {
     method: 'post',
     mode: "cors",
     body: JSON.stringify(data)
   })
-  .then(response => response.json())
-  .then(response => {
-    // response is anything returned API/backend code
-   console.log(response.name);
-   document.querySelector("#head").innerHTML=response.name
+  const dbJSON = await response.json(); //get json
+  if (dbJSON==="0") {
+    console.log("null");
+  }
+  else {
+    dbJSON.forEach(field => { // separate json
+    console.log(field.name);
+    document.querySelector("#head").innerHTML=field.name 
+    });
+  }
+}
+
+//another
+async load2() {
+  let data= {
+    type: "all",
+  };
+  const response = await fetch("https://teakings.000webhostapp.com/new/index.php", {
+    method: 'post',
+    mode: "cors",
+    body: JSON.stringify(data)
   });
+  const dbJSON = await response.json(); //get json
+  if (dbJSON==="0") {
+    console.log("null");
+  }
+  else {
+    dbJSON.forEach(field => { // separate json
+    console.log(field.name);
+    });
+  }
+  
 }
 
 }

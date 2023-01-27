@@ -16,7 +16,8 @@ function Home() {
       <input type="text" className='form-control' value={username} onChange={(e) => setUsername(e.target.value)} />
       <br/>
       <input type="text" className='form-control' value={pword} onChange={(e) => setPword(e.target.value)}/>
-      <button id='btn' className='btn btn-danger float-end mt-3' onClick={() => dbClass.load2(username)}>Login</button>
+      <button id='btn' className='btn btn-danger float-end mt-3' onClick={() => dbClass.load(username)}>Login</button>
+      <button id='btn' className='btn btn-danger float-end mt-3' onClick={() => dbClass.load2()}>dis</button>
       </div>
     </div> 
   );
