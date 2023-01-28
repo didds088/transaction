@@ -17,6 +17,7 @@ async load(user) {
   const dbJSON = await response.json(); //get json
   if (dbJSON==="0") {
     console.log("null");
+    
   }
   else {
     dbJSON.forEach(field => { // separate json
